@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Todo.Classic.BusinessLogic.Factories.Todos;
 using Todo.Classic.DataAccess.Context;
 using Todo.Classic.Model.DTO.Todos;
@@ -28,6 +29,32 @@ namespace Todo.Classic.BusinessLogic.Services.Todos
             finally
             {
                 logger.LogInformation("CreateTodoItemAsync method executed at {Time}", DateTime.UtcNow);
+            }
+        }
+
+        /// <inheritdoc/>
+        public async Task<IReadOnlyList<TodoItemDto>> GetTodoItemsAsync(string? search = null)
+        {
+            try
+            {
+                logger.LogInformation("GetTodoItemsAsync method called at {Time}", DateTime.UtcNow);
+
+                // Start with the base query for todo items
+                var query = todoDbContext.TodoItems.AsQueryable();
+                // If a search term is provided, filter the query to include only items that match the search term in their description
+                if (!string.IsNullOrWhiteSpace(search))
+                {
+                    var term = search.Trim();
+                    query = query.Where(t => EF.Functions.Like(t.Description, $"%{term}%"));
+                }
+                // Execute the query and project the results into TodoItemDto objects
+                return await query
+                    .Select(t => new TodoItemDto(t.Id, t.Description, t.DueDate, t.IsCompleted, t.CompletedDate))
+                    .ToListAsync();
+            }
+            finally
+            {
+                logger.LogInformation("GetTodoItemsAsync method executed at {Time}", DateTime.UtcNow);
             }
         }
     }
