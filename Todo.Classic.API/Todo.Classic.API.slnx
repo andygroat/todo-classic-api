@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="Todo.Classic.API/Todo.Classic.API.csproj" />
+  <Project Path="Todo.Classic.BusinessLogic/Todo.Classic.BusinessLogic.csproj" />
+  <Project Path="Todo.Classic.DataAccess/Todo.Classic.DataAccess.csproj" />
+  <Project Path="Todo.Classic.Model/Todo.Classic.Model.csproj" />
+  <Project Path="Todo.Classic/Todo.Classic.csproj" />
+</Solution>

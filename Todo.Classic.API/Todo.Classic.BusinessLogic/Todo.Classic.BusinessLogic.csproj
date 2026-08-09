@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Todo.Classic.DataAccess\Todo.Classic.DataAccess.csproj" />
+    <ProjectReference Include="..\Todo.Classic.Model\Todo.Classic.Model.csproj" />
+    <ProjectReference Include="..\Todo.Classic\Todo.Classic.csproj" />
+  </ItemGroup>
+
+</Project>

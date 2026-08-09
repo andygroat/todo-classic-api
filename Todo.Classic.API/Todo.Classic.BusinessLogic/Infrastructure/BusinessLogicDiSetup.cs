@@ -1,0 +1,23 @@
+﻿using Microsoft.Extensions.DependencyInjection;
+using Todo.Classic.BusinessLogic.Factories.Todos;
+using Todo.Classic.BusinessLogic.Services.Todos;
+
+namespace Todo.Classic.BusinessLogic.Infrastructure;
+
+public static class BusinessLogicDiSetup
+{
+    /// <summary>
+    /// Adds business logic services to the IServiceCollection for dependency injection.
+    /// </summary>
+    /// <param name="services">The IServiceCollection to add the services to.</param>
+    /// <returns>The updated IServiceCollection.</returns>
+    public static IServiceCollection AddBusinessLogic(this IServiceCollection services)
+    {
+        // Register business logic factories
+        services.AddScoped<ITodoItemFactory, TodoItemFactory>();
+        // Register business logic services
+        services.AddScoped<ITodoService, TodoService>();
+
+        return services;
+    }
+}
