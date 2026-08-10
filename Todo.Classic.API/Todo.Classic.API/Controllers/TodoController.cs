@@ -70,5 +70,37 @@ namespace Todo.Classic.API.Controllers
                 logger.LogInformation("GetTodos request completed.");
             }
         }
+
+        /// <summary>
+        /// Gets a Todo item by its unique identifier.
+        /// </summary>
+        /// <param name="id">The unique identifier of the Todo item.</param>
+        /// <returns>The matching Todo item, or 404 if not found.</returns>
+        [HttpGet("{id:guid}")]
+        [ProducesResponseType(typeof(TodoItemDto), StatusCodes.Status200OK, Description = "Todo item retrieved successfully.")]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Description = "Todo item not found.")]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Description = "Internal server error.")]
+        public async Task<IActionResult> GetTodoById(Guid id)
+        {
+            try
+            {
+                logger.LogInformation("Received GetTodoById request for id: {Id}", id);
+                var todo = await todoService.GetTodoItemByIdAsync(id);
+                if (todo is null)
+                {
+                    return NotFound();
+                }
+                return Ok(todo);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "An error occurred while retrieving the Todo item.");
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+            finally
+            {
+                logger.LogInformation("GetTodoById request completed.");
+            }
+        }
     }
 }

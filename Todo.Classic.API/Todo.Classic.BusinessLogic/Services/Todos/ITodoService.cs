@@ -23,5 +23,12 @@ namespace Todo.Classic.BusinessLogic.Services.Todos
         /// <param name="search">An optional search string to filter todo items by description.</param>
         /// <returns>A collection of todo items matching the search criteria.</returns>
         Task<IReadOnlyList<TodoItemDto>> GetTodoItemsAsync(string? search = null);
+
+        /// <summary>
+        /// Gets a todo item by its unique identifier.
+        /// </summary>
+        /// <param name="id">The unique identifier of the todo item.</param>
+        /// <returns>The matching todo item, or <c>null</c> if not found.</returns>
+        Task<TodoItemDto?> GetTodoItemByIdAsync(Guid id);
     }
 }

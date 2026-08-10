@@ -57,5 +57,24 @@ namespace Todo.Classic.BusinessLogic.Services.Todos
                 logger.LogInformation("GetTodoItemsAsync method executed at {Time}", DateTime.UtcNow);
             }
         }
+
+        /// <inheritdoc/>
+        public async Task<TodoItemDto?> GetTodoItemByIdAsync(Guid id)
+        {
+            try
+            {
+                logger.LogInformation("GetTodoItemByIdAsync method called at {Time}", DateTime.UtcNow);
+
+                // Query the database for a todo item with the specified ID and project it into a TodoItemDto object
+                return await todoDbContext.TodoItems
+                    .Where(t => t.Id == id)
+                    .Select(t => new TodoItemDto(t.Id, t.Description, t.DueDate, t.IsCompleted, t.CompletedDate))
+                    .SingleOrDefaultAsync();
+            }
+            finally
+            {
+                logger.LogInformation("GetTodoItemByIdAsync method executed at {Time}", DateTime.UtcNow);
+            }
+        }
     }
 }
