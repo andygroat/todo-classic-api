@@ -102,5 +102,43 @@ namespace Todo.Classic.API.Controllers
                 logger.LogInformation("GetTodoById request completed.");
             }
         }
+
+        /// <summary>
+        /// Marks a Todo item as completed.
+        /// </summary>
+        /// <param name="id">The unique identifier of the Todo item to complete.</param>
+        /// <returns>The updated Todo item, or 404 if not found.</returns>
+        [HttpPost("{id:guid}/complete")]
+        [ProducesResponseType(typeof(TodoItemDto), StatusCodes.Status200OK, Description = "Todo item completed successfully.")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Description = "Invalid request.")]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Description = "Todo item not found.")]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Description = "Internal server error.")]
+        public async Task<IActionResult> CompleteTodo(Guid id)
+        {
+            try
+            {
+                logger.LogInformation("Received CompleteTodo request for id: {Id}", id);
+                var todo = await todoService.CompleteTodoItemAsync(id);
+                if (todo is null)
+                {
+                    return NotFound();
+                }
+                return Ok(todo);
+            }
+            catch (BusinessLogicException bex)
+            {
+                logger.LogWarning(bex, "Business logic exception occurred while completing a Todo item.");
+                return BadRequest(bex.Message);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "An error occurred while completing the Todo item.");
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+            finally
+            {
+                logger.LogInformation("CompleteTodo request completed.");
+            }
+        }
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Todo.Classic.BusinessLogic.Factories.Todos;
 using Todo.Classic.DataAccess.Context;
+using Todo.Classic.Helpers.BusinessLogic;
 using Todo.Classic.Model.DTO.Todos;
 
 namespace Todo.Classic.BusinessLogic.Services.Todos
@@ -74,6 +75,37 @@ namespace Todo.Classic.BusinessLogic.Services.Todos
             finally
             {
                 logger.LogInformation("GetTodoItemByIdAsync method executed at {Time}", DateTime.UtcNow);
+            }
+        }
+
+        /// <inheritdoc/>
+        public async Task<TodoItemDto?> CompleteTodoItemAsync(Guid id)
+        {
+            try
+            {
+                logger.LogInformation("CompleteTodoItemAsync method called at {Time}", DateTime.UtcNow);
+
+                // Query the database for a todo item with the specified ID
+                var todoItem = await todoDbContext.TodoItems.SingleOrDefaultAsync(t => t.Id == id);
+                // If the todo item is not found, return null
+                if (todoItem is null)
+                    return null;
+
+                // If the todo item is already completed, throw a BusinessLogicException
+                if (todoItem.IsCompleted)
+                    throw new BusinessLogicException("The todo item is already completed.");
+
+                // Mark the todo item as completed and set the completed date to the current UTC time
+                todoItem.IsCompleted = true;
+                todoItem.CompletedDate = DateTime.UtcNow;
+
+                await todoDbContext.SaveChangesAsync();
+
+                return new TodoItemDto(todoItem.Id, todoItem.Description, todoItem.DueDate, todoItem.IsCompleted, todoItem.CompletedDate);
+            }
+            finally
+            {
+                logger.LogInformation("CompleteTodoItemAsync method executed at {Time}", DateTime.UtcNow);
             }
         }
     }

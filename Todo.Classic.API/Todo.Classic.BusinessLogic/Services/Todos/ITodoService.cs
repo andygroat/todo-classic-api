@@ -30,5 +30,12 @@ namespace Todo.Classic.BusinessLogic.Services.Todos
         /// <param name="id">The unique identifier of the todo item.</param>
         /// <returns>The matching todo item, or <c>null</c> if not found.</returns>
         Task<TodoItemDto?> GetTodoItemByIdAsync(Guid id);
+
+        /// <summary>
+        /// Marks a todo item as completed.
+        /// </summary>
+        /// <param name="id">The unique identifier of the todo item to complete.</param>
+        /// <returns>The updated todo item, or <c>null</c> if not found.</returns>
+        Task<TodoItemDto?> CompleteTodoItemAsync(Guid id);
     }
 }
