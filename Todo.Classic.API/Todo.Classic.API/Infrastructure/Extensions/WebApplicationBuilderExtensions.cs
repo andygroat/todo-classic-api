@@ -2,9 +2,11 @@
 using Serilog;
 using Todo.Classic.DataAccess.Context;
 using Todo.Classic.BusinessLogic.Infrastructure;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Todo.Classic.Api.Infrastructure.Extensions;
 
+[ExcludeFromCodeCoverage]
 internal static class WebApplicationBuilderExtensions
 {
     /// <summary>

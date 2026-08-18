@@ -1,7 +1,9 @@
 ﻿using Scalar.AspNetCore;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Todo.Classic.Api.Infrastructure.Extensions;
 
+[ExcludeFromCodeCoverage]
 internal static class WebApplicationExtensions
 {
     /// <summary>

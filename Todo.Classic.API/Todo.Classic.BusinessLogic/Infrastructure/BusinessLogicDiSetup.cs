@@ -1,9 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics.CodeAnalysis;
 using Todo.Classic.BusinessLogic.Factories.Todos;
 using Todo.Classic.BusinessLogic.Services.Todos;
 
 namespace Todo.Classic.BusinessLogic.Infrastructure;
 
+[ExcludeFromCodeCoverage]
 public static class BusinessLogicDiSetup
 {
     /// <summary>

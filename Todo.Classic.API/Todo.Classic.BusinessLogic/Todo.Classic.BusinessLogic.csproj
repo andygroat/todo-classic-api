@@ -11,6 +11,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <InternalsVisibleTo Include="Todo.Classic.BusinessLogic.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Todo.Classic.DataAccess\Todo.Classic.DataAccess.csproj" />
     <ProjectReference Include="..\Todo.Classic.Model\Todo.Classic.Model.csproj" />
     <ProjectReference Include="..\Todo.Classic\Todo.Classic.csproj" />
