@@ -57,7 +57,7 @@ jobs:
 
       # Run the tests and get the code coverage
       - name: Test
-        run: dotnet test ${{ env.Solution }} --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage --logger trx
+        run: dotnet test ${{ env.Solution }} --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage --logger trx --DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.ExcludeByAttribute="GeneratedCodeAttribute"
 
       # Publish the test results to Github Actions
       - name: Publish test results
